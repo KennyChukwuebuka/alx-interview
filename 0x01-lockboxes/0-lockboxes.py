@@ -15,23 +15,19 @@ Write a method that determines if all the boxes can be opened.
 
 
 def canUnlockAll(boxes):
-    """canUnlockAll"""
-    return True
+    n = len(boxes)
+    visited = set()  # Set to keep track of visited boxes
+    stack = [0]      # Stack for DFS, start with the first box
+    visited.add(0)   # Mark the first box as visited
 
-
-if __name__ == "__main__":
-    canUnlockAll = __import__('0-lockboxes').canUnlockAll
-    boxes = [[1], [2], [3], [4], []]
-    print(canUnlockAll(boxes))
-
-    boxes = [[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
-    print(canUnlockAll(boxes))
-
-    boxes = [[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
-    print(canUnlockAll(boxes))
-
-    boxes = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]]
-    print(canUnlockAll(boxes))
-
-    boxes = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]]
-    print(canUnlockAll(boxes))
+    while stack:
+        current_box = stack.pop()
+        for key in boxes[current_box]:
+            # Check if key is valid and not visited
+            if key < n and key not in visited:
+                # Add the key's box to the stack
+                stack.append(key)
+                # Mark the key's box as visited
+                visited.add(key)
+# All boxes have been visited if len(visited) == n
+    return len(visited) == n
