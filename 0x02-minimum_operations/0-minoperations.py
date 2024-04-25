@@ -29,15 +29,15 @@ def minOperations(n):
     :return: an integer representing the
     fewest number of operations needed
     """
-    if n < 1:
-        return 0
+
+    def minOperations(n):
+        if n <= 1:
+            return 0
     operations = 0
-    copied = 1
-    while copied < n:
-        if (n - copied) >= copied:
-            n -= copied
-            operations += 2
-        else:
-            copied *= 2
-            operations += 1
+    divisor = 2
+    while n > 1:
+        while n % divisor == 0:
+            operations += divisor
+            n //= divisor
+        divisor += 1
     return operations
