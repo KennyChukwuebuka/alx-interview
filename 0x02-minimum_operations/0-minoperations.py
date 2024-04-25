@@ -20,6 +20,15 @@ Number of operations: 6
 
 
 def minOperations(n):
+    """
+    Calculate the fewest number of operations
+    needed to result in exactly n H characters in the file.
+    
+    :param n: an integer representing the
+    desired number of characters
+    :return: an integer representing the
+    fewest number of operations needed
+    """
     if n < 1:
         return 0
     operations = 0
