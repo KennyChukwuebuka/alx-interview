@@ -1,16 +1,18 @@
 #!/usr/bin/python3
-"""
-A script: Reads standard input line by line and computes metrics
+"""Script that reads stdin
 """
 
 
 def parseLogs():
     """
-    Reads logs from standard input and generates reports
-    Reports:
-        * Prints log size after reading every 10 lines & at KeyboardInterrupt
-    Raises:
-        KeyboardInterrupt (Exception): handles this exception and raises it
+    Parses logs from standard input and calculates
+    the file size and status codes.
+
+    Args:
+        None
+
+    Returns:
+        None
     """
     stdin = __import__('sys').stdin
     lineNumber = 0
