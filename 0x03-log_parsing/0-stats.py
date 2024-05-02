@@ -1,36 +1,47 @@
 #!/usr/bin/python3
+"""function that parses apache log files
+"""
 import sys
+from collections import defaultdict
 
-total_size = 0
-status_code_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0,
-                     404: 0, 405: 0, 500: 0}
-line_count = 0
 
-for line in sys.stdin:
-    line_count += 1
+def print_statistics(total_size, status_counts):
+    """function that prints statistics
+    """
+    print("File size:", total_size)
+    for code, count in sorted(status_counts.items()):
+        print(f"{code}: {count}")
+
+
+def parse_line(line):
+    """function that parses line"""
     parts = line.split()
     if len(parts) != 7:
-        continue
+        return None
+    ip, date, request, status_code, size = parts[0], parts[3][1:],
+    parts[5], parts[6], int(parts[8])
+    if request != "GET /projects/260 HTTP/1.1":
+        return None
+    return ip, status_code, size
+
+
+def main():
+    """main function
+    """
+    total_size = 0
+    status_counts = defaultdict(int)
     try:
-        file_size = int(parts[6])
-        status_code = int(parts[5])
-        if status_code in status_code_count:
-            total_size += file_size
-            status_code_count[status_code] += 1
-    except ValueError:
-        continue
+        for i, line in enumerate(sys.stdin, 1):
+            parsed_line = parse_line(line.strip())
+            if parsed_line:
+                ip, status_code, size = parsed_line
+                total_size += size
+                status_counts[status_code] += 1
+            if i % 10 == 0:
+                print_statistics(total_size, status_counts)
+    except KeyboardInterrupt:
+        print_statistics(total_size, status_counts)
 
-    if line_count % 10 == 0:
-        print(f"File size: {total_size}")
-        for code in sorted(status_code_count.keys()):
-            if status_code_count[code] > 0:
-                print(f"{code}: {status_code_count[code]}")
 
-try:
-    while True:
-        pass
-except KeyboardInterrupt:
-    print(f"File size: {total_size}")
-    for code in sorted(status_code_count.keys()):
-        if status_code_count[code] > 0:
-            print(f"{code}: {status_code_count[code]}")
+if __name__ == "__main__":
+    main()
