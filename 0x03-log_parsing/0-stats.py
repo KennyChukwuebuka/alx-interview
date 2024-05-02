@@ -37,6 +37,9 @@ def parseLogs():
     except KeyboardInterrupt as e:
         report(fileSize, statusCodes)
         raise
+    except BrokenPipeError:
+        # Handle the BrokenPipeError explicitly
+        pass
 
 
 def report(fileSize, statusCodes):
@@ -51,5 +54,9 @@ def report(fileSize, statusCodes):
         print("{}: {}".format(key, value))
 
 
-if __name__ == '_main_':
-    parseLogs()
+if __name__ == '__main__':
+    try:
+        parseLogs()
+    except BrokenPipeError:
+        # Handle the BrokenPipeError at the top level
+        pass
