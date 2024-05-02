@@ -12,7 +12,8 @@ line_count = 0
 for line in sys.stdin:
     line_count += 1
     match = re.match(
-        r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[(.*?)\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$',
+        r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[(.*?)\] '
+        r'"GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$',
         line)
     if match:
         ip, date, status_code, file_size = match.groups()
