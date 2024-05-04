@@ -4,6 +4,7 @@
 # Import necessary modules
 import sys
 
+
 def parseLogs():
     """
     Parses logs from standard input and calculates
@@ -40,16 +41,19 @@ def parseLogs():
                         # If status code doesn't exist, initialize it
                         statusCodes[line[-2]] = 1
             except (IndexError, ValueError):
-                # Ignore lines that cannot be processed due to missing or invalid data
+                # Ignore lines that cannot be processed
+                # due to missing or invalid data
                 pass
-            # If 10 lines have been processed, generate report and reset counter
+            # If 10 lines have been processed,
+            # generate report and reset counter
             if lineNumber == 10:
                 report(fileSize, statusCodes)
                 lineNumber = 0
         # Generate report for the remaining lines
         report(fileSize, statusCodes)
     except KeyboardInterrupt as e:
-        # In case of KeyboardInterrupt, generate report and re-raise the exception
+        # In case of KeyboardInterrupt, generate
+        # report and re-raise the exception
         report(fileSize, statusCodes)
         raise
     except BrokenPipeError:
@@ -67,7 +71,8 @@ def report(fileSize, statusCodes):
     """
     # Print total file size
     print("File size: {}".format(fileSize))
-    # Print each status code and its count, sorted alphabetically by status code
+    # Print each status code and its count,
+    # sorted alphabetically by status code
     for key, value in sorted(statusCodes.items()):
         print("{}: {}".format(key, value))
 
