@@ -8,7 +8,7 @@ import sys
 
 def nqueens(n):
     """
-    nqueens
+    nqeen
     """
     def solve(queens, xy_dif, xy_sum):
         p = len(queens)
@@ -38,6 +38,4 @@ if n < 4:
     sys.exit(1)
 
 for solution in nqueens(n):
-    print('[' + ', '.join(['[' + str(i) + ', '
-                           + str(solution.index(i))
-                           + ']' for i in range(n)]) + ']')
+    print([[i, solution.index(i)] for i in solution])
