@@ -6,16 +6,27 @@ Prime Game
 
 def isWinner(x, nums):
     """
-    Returns the name of the player that won the most rounds
+    x: number of rounds
     """
-    if x < 1 or nums is None or x > 10000:
+    if x < 1 or not nums:
         return None
-    if x == 1:
-        return "Maria"
-    if x == 2:
-        return "Ben"
-    return "Maria" if sum(nums) % 2 == 0 else "Ben"
+    maria, ben = 0, 0
 
+    # create a list of prime numbers
+    n = max(nums)
+    primes = [True for _ in range(1, n + 1, 1)]
+    primes[0] = False
+    for i, is_prime in enumerate(primes, 1):
+        if i == 1 or not is_prime:
+            continue
+        for j in range(i + i, n + 1, i):
+            primes[j - 1] = False
 
-if __name__ == "__main__":
-    print(isWinner(5, [2, 5, 1, 4, 3]))
+    # count the number of primes
+    for _, n in zip(range(x), nums):
+        primes_count = len(list(filter(lambda x: x, primes[0: n])))
+        ben += primes_count % 2 == 0
+        maria += primes_count % 2 == 1
+    if maria == ben:
+        return None
+    return 'Maria' if maria > ben else 'Ben'
