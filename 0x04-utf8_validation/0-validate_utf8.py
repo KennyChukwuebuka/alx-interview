@@ -31,7 +31,7 @@ def validUTF8(data):
                 return False
         else:
             if d & 192 != 128:
-                return False
+                return False    
             count -= 1
     if count == 0:
         return True
